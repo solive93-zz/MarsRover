@@ -26,7 +26,7 @@ final class MarsRoverTest extends TestCase
         $this->assertEquals('N', $rover->direction());
     }
 
-    public function test_mars_rover_should_turn_right_when_right_command_is_given()
+    public function test_mars_rover_should_turn_right_when_R_command_is_given()
     {
         $rover = new MarsRover(new Position(1, 1), 'N');
 

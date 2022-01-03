@@ -29,22 +29,28 @@ final class MarsRover
 
     public function move(string $commandSet)
     {
-        $compass = ['N', 'O', 'S', 'E'];
-        $currentLatitude  = $this->latitude();
-        $currentLongitude = $this->longitude();
-        $numericDirection = array_search($this->direction, $compass);
-
         for ($i = 0; $i < strlen($commandSet); $i++) {
             $command = $commandSet[$i];
             if ($command === 'F') {
-                $currentLatitude += 1;
+                $this->moveForward();
             }
             if ($command === 'R') {
-                $numericDirection += 1;
+                $this->turnRight();
             }
         }
+    }
 
-        $this->position = new Position($currentLatitude, $currentLongitude);
-        $this->direction = $compass[$numericDirection % count($compass)];
+    private function moveForward()
+    {
+        $this->position = new Position($this->latitude() +1, $this->longitude());
+    }
+
+    private function turnRight()
+    {
+        $compass = ['N', 'O', 'S', 'E'];
+        $numericDirection = array_search($this->direction, $compass);
+        $numericDirection += 1;
+
+        $this->direction =  $compass[$numericDirection % count($compass)];
     }
 }
