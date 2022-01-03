@@ -34,6 +34,17 @@ final class MarsRoverTest extends TestCase
 
         $this->assertEquals(1, $rover->latitude());
         $this->assertEquals(1, $rover->longitude());
-        $this->assertEquals('O', $rover->direction());
+        $this->assertEquals('E', $rover->direction());
+    }
+
+    public function test_mars_rover_should_turn_left_when_L_command_is_given()
+    {
+        $rover = new MarsRover(new Position(1, 1), 'E');
+
+        $rover->move('LLLLL');
+
+        $this->assertEquals(1, $rover->latitude());
+        $this->assertEquals(1, $rover->longitude());
+        $this->assertEquals('N', $rover->direction());
     }
 }

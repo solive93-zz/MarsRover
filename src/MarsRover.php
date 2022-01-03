@@ -22,12 +22,12 @@ final class MarsRover
         return $this->position->longitude();
     }
 
-    public function direction()
+    public function direction(): string
     {
         return $this->direction;
     }
 
-    public function move(string $commandSet)
+    public function move(string $commandSet): void
     {
         for ($i = 0; $i < strlen($commandSet); $i++) {
             $command = $commandSet[$i];
@@ -37,19 +37,32 @@ final class MarsRover
             if ($command === 'R') {
                 $this->turnRight();
             }
+            if($command === 'L') {
+                $this->turnLeft();
+            }
         }
     }
 
-    private function moveForward()
+    private function moveForward(): void
     {
         $this->position = new Position($this->latitude() +1, $this->longitude());
     }
 
-    private function turnRight()
+    private function turnRight(): void
     {
-        $compass = ['N', 'O', 'S', 'E'];
+        $compass = ['N', 'E', 'S', 'O'];
         $numericDirection = array_search($this->direction, $compass);
         $numericDirection += 1;
+
+        $this->direction =  $compass[$numericDirection % count($compass)];
+    }
+
+    private function turnLeft(): void
+    {
+        $compass = ['N', 'E', 'S', '0'];
+        $numericDirection = array_search($this->direction, $compass);
+        $numericDirection -= 1;
+        $numericDirection += $numericDirection < 0 ? count($compass) : 0;
 
         $this->direction =  $compass[$numericDirection % count($compass)];
     }
