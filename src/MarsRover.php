@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MarsRover;
 
+use MarsRover\ValueObject\Direction;
 use MarsRover\ValueObject\Position;
 
 final class MarsRover
@@ -50,20 +51,12 @@ final class MarsRover
 
     private function turnRight(): void
     {
-        $compass = ['N', 'E', 'S', 'O'];
-        $numericDirection = array_search($this->direction, $compass);
-        $numericDirection += 1;
-
-        $this->direction =  $compass[$numericDirection % count($compass)];
+        $this->direction = Direction::COMPASS[$this->direction];
     }
 
     private function turnLeft(): void
     {
-        $compass = ['N', 'E', 'S', '0'];
-        $numericDirection = array_search($this->direction, $compass);
-        $numericDirection -= 1;
-        $numericDirection += $numericDirection < 0 ? count($compass) : 0;
-
-        $this->direction =  $compass[$numericDirection % count($compass)];
+        $direction = array_search($this->direction, Direction::COMPASS);
+        $this->direction = $direction;
     }
 }
