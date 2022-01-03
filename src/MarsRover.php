@@ -26,4 +26,16 @@ final class MarsRover
     {
         return $this->direction;
     }
+
+    public function move(string $commandSet)
+    {
+        $currentLatitude  = $this->latitude();
+        $currentLongitude = $this->longitude();
+
+        for ($i = 0; $i < strlen($commandSet); $i++) {
+            $currentLatitude += 1;
+        }
+
+        $this->position = new Position($currentLatitude, $currentLongitude);
+    }
 }
