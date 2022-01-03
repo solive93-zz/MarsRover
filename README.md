@@ -4,7 +4,7 @@ of the planet. Develop a software that translates the commands sent from earth t
 that are understood by the rover.
 
 ## Requirements
-● You are given the initial starting point (`'x', 'y'`) of a rover and the direction (`'N', 'S', 'E', 'O'`)
+● You are given the initial starting point (`'x', 'y'`) of a rover and the direction (`'N', 'S', 'E', 'W'`)
 it is facing.
 
 ● The rover receives a collection of commands. (E.g.) `'FFRRFFFRL'`
