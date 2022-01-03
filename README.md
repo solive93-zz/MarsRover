@@ -42,5 +42,5 @@ make tests
 ````
 3. Run tests with coverage
 ````
-make build
+make coverage
 ````
