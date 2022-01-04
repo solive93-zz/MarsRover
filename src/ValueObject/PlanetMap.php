@@ -2,6 +2,8 @@
 
 namespace MarsRover\ValueObject;
 
+use MarsRover\Exception\UnreachablePositionException;
+
 class PlanetMap
 {
     private const MIN_HEIGHT_AND_WIDTH = 0;
@@ -9,7 +11,7 @@ class PlanetMap
     public function __construct(
         private int $maxHeight,
         private int $maxWidth,
-        private ?array $obstaclePosition = null
+        private array $obstacles = []
     ) {
     }
 
@@ -41,6 +43,11 @@ class PlanetMap
             $long = ($long === self::MIN_HEIGHT_AND_WIDTH) ? $this->maxWidth -1 : $long -1;
         }
 
-        return new Position($lat, $long);
+        $nextPosition = new Position($lat, $long);
+        if (in_array($nextPosition, $this->obstacles)) {
+            throw new UnreachablePositionException($nextPosition);
+        }
+
+        return $nextPosition;
     }
 }

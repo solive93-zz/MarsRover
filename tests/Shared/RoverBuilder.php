@@ -9,13 +9,11 @@ use MarsRover\ValueObject\Position;
 
 final class RoverBuilder
 {
-    private PlanetMap $map;
-    private Position $position;
+    private Position  $position;
     private Direction $direction;
-
-    public function __construct()
-    {
-    }
+    private int       $maxHeight;
+    private int       $maxWidth;
+    private ?array    $obstacle;
 
     public static function createRoverBuilder(): self
     {
@@ -36,12 +34,21 @@ final class RoverBuilder
 
     public function inAPlanetWithSize(int $maxHeight, int $maxWidth): self
     {
-        $this->map = new PlanetMap($maxHeight, $maxWidth);
+        $this->maxHeight = $maxHeight;
+        $this->maxWidth = $maxWidth;
+        return $this;
+    }
+
+    public function thatHasAnObstacleOn(int $latitude, int $longitude): self
+    {
+        $this->obstacle = [new Position($latitude, $longitude)];
         return $this;
     }
 
     public function instantiate(): MarsRover
     {
-        return new MarsRover($this->map, $this->position, $this->direction);
+        $obstacle = $this->obstacle ?? [];
+        $map = new PlanetMap($this->maxHeight, $this->maxWidth, $obstacle);
+        return new MarsRover($map, $this->position, $this->direction);
     }
 }

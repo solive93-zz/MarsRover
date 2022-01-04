@@ -2,6 +2,7 @@
 
 namespace MarsRover\Tests;
 
+use MarsRover\Exception\UnreachablePositionException;
 use MarsRover\Tests\Shared\RoverBuilder;
 use MarsRover\ValueObject\Direction;
 use PHPUnit\Framework\TestCase;
@@ -169,5 +170,22 @@ final class MarsRoverTest extends TestCase
         $this->assertEquals(0, $rover->latitude());
         $this->assertEquals(4, $rover->longitude());
         $this->assertEquals(Direction::WEST, $rover->direction());
+    }
+
+    public function test_rover_should_move_to_last_possible_position_and_report_the_obstacle_when_obstacle_find()
+    {
+        $rover = RoverBuilder::createRoverBuilder()
+            ->inPosition(0, 0)
+            ->facing(Direction::NORTH)
+            ->inAPlanetWithSize(5, 5)
+            ->thatHasAnObstacleOn(1, 1)
+            ->instantiate();
+
+        $output = $rover->move('FRF');
+
+        $this->assertEquals(1, $rover->latitude());
+        $this->assertEquals(0, $rover->longitude());
+        $this->assertEquals(Direction::EAST, $rover->direction());
+        $this->assertStringContainsString(UnreachablePositionException::ERROR_MESSAGE, $output);
     }
 }
