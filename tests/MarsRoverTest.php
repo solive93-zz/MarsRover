@@ -1,15 +1,20 @@
 <?php
 
-use MarsRover\MarsRover;
+namespace MarsRover\Tests;
+
+use MarsRover\Tests\Shared\RoverBuilder;
 use MarsRover\ValueObject\Direction;
-use MarsRover\ValueObject\Position;
 use PHPUnit\Framework\TestCase;
 
 final class MarsRoverTest extends TestCase
 {
-    public function test_mars_rover_is_instantiated_with_given_position_and_direction()
+    public function test_mars_rover_is_instantiated_with_given_position_direction_and_planetMap()
     {
-        $rover = new MarsRover(new Position(1, 2), new Direction ('W'));
+        $rover = RoverBuilder::createRoverBuilder()
+            ->inPosition(1, 2)
+            ->facing(Direction::WEST)
+            ->inAPlanetWithSize(10, 10)
+            ->instantiate();
 
         $this->assertEquals(1, $rover->latitude());
         $this->assertEquals(2, $rover->longitude());
@@ -18,7 +23,11 @@ final class MarsRoverTest extends TestCase
 
     public function test_mars_rover_should_move_forward_to_north_when_F_command_given()
     {
-        $rover = new MarsRover(new Position(0, 0), new Direction('N'));
+        $rover = RoverBuilder::createRoverBuilder()
+            ->inPosition(0, 0)
+            ->facing(Direction::NORTH)
+            ->inAPlanetWithSize(10, 10)
+            ->instantiate();
 
         $rover->move('FFF');
 
@@ -29,7 +38,11 @@ final class MarsRoverTest extends TestCase
 
     public function test_mars_rover_should_move_forward_to_east_when_F_command_given()
     {
-        $rover = new MarsRover(new Position(0, 0), new Direction('E'));
+        $rover = RoverBuilder::createRoverBuilder()
+            ->inPosition(0, 0)
+            ->facing(Direction::EAST)
+            ->inAPlanetWithSize(10, 10)
+            ->instantiate();
 
         $rover->move('FF');
 
@@ -40,7 +53,11 @@ final class MarsRoverTest extends TestCase
 
     public function test_mars_rover_should_move_forward_to_south_when_F_command_given()
     {
-        $rover = new MarsRover(new Position(5, 0), new Direction('S'));
+        $rover = RoverBuilder::createRoverBuilder()
+            ->inPosition(5, 0)
+            ->facing(Direction::SOUTH)
+            ->inAPlanetWithSize(10, 10)
+            ->instantiate();
 
         $rover->move('FFFF');
 
@@ -51,7 +68,11 @@ final class MarsRoverTest extends TestCase
 
     public function test_mars_rover_should_move_forward_to_west_when_F_command_given()
     {
-        $rover = new MarsRover(new Position(2, 4), new Direction('W'));
+        $rover = RoverBuilder::createRoverBuilder()
+            ->inPosition(2, 4)
+            ->facing(Direction::WEST)
+            ->inAPlanetWithSize(10, 10)
+            ->instantiate();
 
         $rover->move('FF');
 
@@ -62,7 +83,11 @@ final class MarsRoverTest extends TestCase
 
     public function test_mars_rover_should_turn_right_when_R_command_is_given()
     {
-        $rover = new MarsRover(new Position(1, 1), new Direction('N'));
+        $rover = RoverBuilder::createRoverBuilder()
+            ->inPosition(1, 1)
+            ->facing(Direction::NORTH)
+            ->inAPlanetWithSize(10, 10)
+            ->instantiate();
 
         $rover->move('RRRRR');
 
@@ -73,7 +98,11 @@ final class MarsRoverTest extends TestCase
 
     public function test_mars_rover_should_turn_left_when_L_command_is_given()
     {
-        $rover = new MarsRover(new Position(1, 1), new Direction('E'));
+        $rover = RoverBuilder::createRoverBuilder()
+            ->inPosition(1, 1)
+            ->facing(Direction::EAST)
+            ->inAPlanetWithSize(10, 10)
+            ->instantiate();
 
         $rover->move('LLLLL');
 

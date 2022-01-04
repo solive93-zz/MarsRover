@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace MarsRover;
 
 use MarsRover\ValueObject\Direction;
+use MarsRover\ValueObject\PlanetMap;
 use MarsRover\ValueObject\Position;
 
 final class MarsRover
 {
-    public function __construct(private Position $position, private Direction $direction)
+    public function __construct(private PlanetMap $map, private Position $position, private Direction $direction)
     {
     }
 
