@@ -13,16 +13,6 @@ final class MarsRover
     {
     }
 
-    public function latitude(): int
-    {
-        return $this->position->latitude();
-    }
-
-    public function longitude(): int
-    {
-        return $this->position->longitude();
-    }
-
     public function direction(): string
     {
         return $this->direction->value();
@@ -33,29 +23,24 @@ final class MarsRover
         for ($i = 0; $i < strlen($commandSet); $i++) {
             $command = $commandSet[$i];
             if ($command === 'F') {
-                $this->moveForward();
+                $this->position = $this->position->nextPositionWhenFacing($this->direction());
             }
             if ($command === 'R') {
-                $this->turnRight();
+                $this->direction = $this->direction->right();
             }
             if($command === 'L') {
-                $this->turnLeft();
+                $this->direction = $this->direction->left();
             }
         }
     }
 
-    private function moveForward(): void
+    public function latitude(): int
     {
-        $this->position = $this->position->nextPositionWhenFacing($this->direction());
+        return $this->position->latitude();
     }
 
-    private function turnRight(): void
+    public function longitude(): int
     {
-        $this->direction = $this->direction->right();
-    }
-
-    private function turnLeft(): void
-    {
-        $this->direction = $this->direction->left();
+        return $this->position->longitude();
     }
 }
