@@ -2,6 +2,8 @@
 
 namespace MarsRover\ValueObject;
 
+use MarsRover\Exception\InvalidDirectionException;
+
 class Direction
 {
     public const NORTH   = 'N';
@@ -17,6 +19,7 @@ class Direction
 
     public function __construct(private string $value = self::NORTH)
     {
+        $this->ensureIsValidDirection($this->value);
     }
 
     public function value(): string
@@ -34,5 +37,12 @@ class Direction
     {
         $direction = array_search($this->value, Direction::COMPASS);
         return new Direction($direction);
+    }
+
+    private function ensureIsValidDirection(string $direction): void
+    {
+        if (!in_array($direction, self::COMPASS)) {
+            throw new InvalidDirectionException();
+        }
     }
 }

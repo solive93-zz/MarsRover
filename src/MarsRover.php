@@ -13,11 +13,6 @@ final class MarsRover
     {
     }
 
-    public function direction(): string
-    {
-        return $this->direction->value();
-    }
-
     public function move(string $commandSet): void
     {
         for ($i = 0; $i < strlen($commandSet); $i++) {
@@ -42,5 +37,10 @@ final class MarsRover
     public function longitude(): int
     {
         return $this->position->longitude();
+    }
+
+    public function direction(): string
+    {
+        return $this->direction->value();
     }
 }
