@@ -10,7 +10,7 @@ use MarsRover\ValueObject\Position;
 
 final class MarsRover
 {
-    public function __construct(private PlanetMap $map, private Position $position, private Direction $direction)
+    public function __construct(private PlanetMap $map, private Position $currentPosition, private Direction $direction)
     {
     }
 
@@ -19,7 +19,7 @@ final class MarsRover
         for ($i = 0; $i < strlen($commandSet); $i++) {
             $command = $commandSet[$i];
             if ($command === 'F') {
-                $this->position = $this->position->nextPositionWhenFacing($this->direction());
+                $this->currentPosition = $this->map->nextPositionFor($this->currentPosition, $this->direction());
             }
             if ($command === 'R') {
                 $this->direction = $this->direction->right();
@@ -32,12 +32,12 @@ final class MarsRover
 
     public function latitude(): int
     {
-        return $this->position->latitude();
+        return $this->currentPosition->latitude();
     }
 
     public function longitude(): int
     {
-        return $this->position->longitude();
+        return $this->currentPosition->longitude();
     }
 
     public function direction(): string

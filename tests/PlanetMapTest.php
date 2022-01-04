@@ -3,6 +3,7 @@
 namespace MarsRover\Tests;
 
 use MarsRover\ValueObject\PlanetMap;
+use MarsRover\ValueObject\Position;
 use PHPUnit\Framework\TestCase;
 
 class PlanetMapTest extends TestCase

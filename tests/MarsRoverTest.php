@@ -110,4 +110,64 @@ final class MarsRoverTest extends TestCase
         $this->assertEquals(1, $rover->longitude());
         $this->assertEquals('N', $rover->direction());
     }
+
+    public function test_mars_rover_should_appear_to_south_when_being_on_north_edge_facing_north_and_F_command_given()
+    {
+        $rover = RoverBuilder::createRoverBuilder()
+            ->inPosition(4, 0)
+            ->facing(Direction::NORTH)
+            ->inAPlanetWithSize(5, 5)
+            ->instantiate();
+
+        $rover->move('F');
+
+        $this->assertEquals(0, $rover->latitude());
+        $this->assertEquals(0, $rover->longitude());
+        $this->assertEquals('N', $rover->direction());
+    }
+
+    public function test_mars_rover_should_appear_to_north_when_being_on_south_edge_facing_south_and_F_command_given()
+    {
+        $rover = RoverBuilder::createRoverBuilder()
+            ->inPosition(0, 0)
+            ->facing(Direction::SOUTH)
+            ->inAPlanetWithSize(5, 5)
+            ->instantiate();
+
+        $rover->move('F');
+
+        $this->assertEquals(4, $rover->latitude());
+        $this->assertEquals(0, $rover->longitude());
+        $this->assertEquals(Direction::SOUTH, $rover->direction());
+    }
+
+    public function test_mars_rover_should_appear_to_west_when_being_on_east_edge_facing_east_and_F_command_given()
+    {
+        $rover = RoverBuilder::createRoverBuilder()
+            ->inPosition(0, 4)
+            ->facing(Direction::EAST)
+            ->inAPlanetWithSize(5, 5)
+            ->instantiate();
+
+        $rover->move('F');
+
+        $this->assertEquals(0, $rover->latitude());
+        $this->assertEquals(0, $rover->longitude());
+        $this->assertEquals(Direction::EAST, $rover->direction());
+    }
+
+    public function test_mars_rover_should_appear_to_east_when_being_on_west_edge_facing_west_and_F_command_given()
+    {
+        $rover = RoverBuilder::createRoverBuilder()
+            ->inPosition(0, 0)
+            ->facing(Direction::WEST)
+            ->inAPlanetWithSize(5, 5)
+            ->instantiate();
+
+        $rover->move('F');
+
+        $this->assertEquals(0, $rover->latitude());
+        $this->assertEquals(4, $rover->longitude());
+        $this->assertEquals(Direction::WEST, $rover->direction());
+    }
 }
