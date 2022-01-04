@@ -23,4 +23,16 @@ class Direction
     {
         return $this->value;
     }
+
+    public function right(): self
+    {
+        $direction = Direction::COMPASS[$this->value];
+        return new Direction($direction);
+    }
+
+    public function left(): self
+    {
+        $direction = array_search($this->value, Direction::COMPASS);
+        return new Direction($direction);
+    }
 }

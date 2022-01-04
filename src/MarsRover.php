@@ -46,34 +46,16 @@ final class MarsRover
 
     private function moveForward(): void
     {
-        if ($this->direction() === Direction::NORTH) {
-            $latitude = $this->latitude() +1;
-        }
-        if ($this->direction() === Direction::EAST) {
-            $longitude = $this->longitude() +1;
-        }
-        if ($this->direction() === Direction::SOUTH) {
-            $latitude = $this->latitude() -1;
-        }
-        if ($this->direction() === Direction::WEST) {
-            $longitude = $this->longitude() -1;
-        }
-
-        $this->position = new Position(
-            $latitude ?? $this->latitude(),
-            $longitude ?? $this->longitude()
-        );
+        $this->position = $this->position->nextPositionWhenFacing($this->direction());
     }
 
     private function turnRight(): void
     {
-        $direction = Direction::COMPASS[$this->direction()];
-        $this->direction = new Direction($direction);
+        $this->direction = $this->direction->right();
     }
 
     private function turnLeft(): void
     {
-        $direction = array_search($this->direction(), Direction::COMPASS);
-        $this->direction = new Direction($direction);
+        $this->direction = $this->direction->left();
     }
 }

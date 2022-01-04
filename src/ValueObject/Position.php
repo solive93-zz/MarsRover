@@ -19,4 +19,25 @@ final class Position
     {
         return $this->longitude;
     }
+
+    public function nextPositionWhenFacing(string $direction): self
+    {
+        if ($direction === Direction::NORTH) {
+            $latitude = $this->latitude() +1;
+        }
+        if ($direction === Direction::EAST) {
+            $longitude = $this->longitude() +1;
+        }
+        if ($direction === Direction::SOUTH) {
+            $latitude = $this->latitude() -1;
+        }
+        if ($direction === Direction::WEST) {
+            $longitude = $this->longitude() -1;
+        }
+
+        return new Position(
+            $latitude ?? $this->latitude(),
+            $longitude ?? $this->longitude()
+        );
+    }
 }
