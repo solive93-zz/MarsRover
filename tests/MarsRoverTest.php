@@ -15,7 +15,7 @@ final class MarsRoverTest extends TestCase
         $this->assertEquals('W', $rover->direction());
     }
 
-    public function test_mars_rover_should_move_forward_when_F_command_given()
+    public function test_mars_rover_should_move_forward_to_north_when_F_command_given()
     {
         $rover = new MarsRover(new Position(0, 0), 'N');
 
@@ -24,6 +24,39 @@ final class MarsRoverTest extends TestCase
         $this->assertEquals(3, $rover->latitude());
         $this->assertEquals(0, $rover->longitude());
         $this->assertEquals('N', $rover->direction());
+    }
+
+    public function test_mars_rover_should_move_forward_to_east_when_F_command_given()
+    {
+        $rover = new MarsRover(new Position(0, 0), 'E');
+
+        $rover->move('FF');
+
+        $this->assertEquals(0, $rover->latitude());
+        $this->assertEquals(2, $rover->longitude());
+        $this->assertEquals('E', $rover->direction());
+    }
+
+    public function test_mars_rover_should_move_forward_to_south_when_F_command_given()
+    {
+        $rover = new MarsRover(new Position(5, 0), 'S');
+
+        $rover->move('FFFF');
+
+        $this->assertEquals(1, $rover->latitude());
+        $this->assertEquals(0, $rover->longitude());
+        $this->assertEquals('S', $rover->direction());
+    }
+
+    public function test_mars_rover_should_move_forward_to_west_when_F_command_given()
+    {
+        $rover = new MarsRover(new Position(2, 4), 'W');
+
+        $rover->move('FF');
+
+        $this->assertEquals(2, $rover->latitude());
+        $this->assertEquals(2, $rover->longitude());
+        $this->assertEquals('W', $rover->direction());
     }
 
     public function test_mars_rover_should_turn_right_when_R_command_is_given()
