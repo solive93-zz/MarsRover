@@ -15,7 +15,7 @@ final class MarsRover
     {
     }
 
-    public function move(string $commandSet): string|null
+    public function move(string $commandSet): string
     {
         for ($i = 0; $i < strlen($commandSet); $i++) {
             $command = $commandSet[$i];
@@ -30,10 +30,25 @@ final class MarsRover
                     $this->direction = $this->direction->left();
                 }
             } catch (UnreachablePositionException $positionException) {
-                return $positionException->getMessage();
+                return $this->reportPosition($this->currentPosition, $positionException->getMessage());
             }
         }
-        return null;
+        return $this->reportPosition($this->currentPosition);
+    }
+
+    private function reportPosition(Position $position, ?string $message = null): string
+    {
+        $position = sprintf(
+            '%s:%s:%s', $position->latitude(), $position->longitude(), $this->direction()
+        );
+
+        if ($message !== null) {
+            return sprintf(
+                '%s Last reported position was %s', $message, $position
+            );
+        }
+
+        return $position;
     }
 
     public function latitude(): int
