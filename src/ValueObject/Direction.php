@@ -14,4 +14,13 @@ class Direction
         self::SOUTH => self::WEST,
         self::WEST  => self::NORTH
     ];
+
+    public function __construct(private string $value = self::NORTH)
+    {
+    }
+
+    public function value(): string
+    {
+        return $this->value;
+    }
 }

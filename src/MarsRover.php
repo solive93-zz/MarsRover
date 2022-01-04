@@ -9,7 +9,7 @@ use MarsRover\ValueObject\Position;
 
 final class MarsRover
 {
-    public function __construct(private Position $position, private string $direction)
+    public function __construct(private Position $position, private Direction $direction)
     {
     }
 
@@ -25,7 +25,7 @@ final class MarsRover
 
     public function direction(): string
     {
-        return $this->direction;
+        return $this->direction->value();
     }
 
     public function move(string $commandSet): void
@@ -46,16 +46,16 @@ final class MarsRover
 
     private function moveForward(): void
     {
-        if ($this->direction === Direction::NORTH) {
+        if ($this->direction() === Direction::NORTH) {
             $latitude = $this->latitude() +1;
         }
-        if ($this->direction === Direction::EAST) {
+        if ($this->direction() === Direction::EAST) {
             $longitude = $this->longitude() +1;
         }
-        if ($this->direction === Direction::SOUTH) {
+        if ($this->direction() === Direction::SOUTH) {
             $latitude = $this->latitude() -1;
         }
-        if ($this->direction === Direction::WEST) {
+        if ($this->direction() === Direction::WEST) {
             $longitude = $this->longitude() -1;
         }
 
@@ -67,12 +67,13 @@ final class MarsRover
 
     private function turnRight(): void
     {
-        $this->direction = Direction::COMPASS[$this->direction];
+        $direction = Direction::COMPASS[$this->direction()];
+        $this->direction = new Direction($direction);
     }
 
     private function turnLeft(): void
     {
-        $direction = array_search($this->direction, Direction::COMPASS);
-        $this->direction = $direction;
+        $direction = array_search($this->direction(), Direction::COMPASS);
+        $this->direction = new Direction($direction);
     }
 }
