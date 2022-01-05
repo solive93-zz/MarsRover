@@ -1,5 +1,7 @@
 <?php
 
+namespace MarsRover\Tests;
+
 use MarsRover\Exception\InvalidDirectionException;
 use MarsRover\ValueObject\Direction;
 use PHPUnit\Framework\TestCase;
