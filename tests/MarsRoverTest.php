@@ -30,11 +30,12 @@ final class MarsRoverTest extends TestCase
             ->inAPlanetWithSize(10, 10)
             ->instantiate();
 
-        $rover->move('FFF');
+        $roverReport = $rover->move('FFF');
 
         $this->assertEquals(3, $rover->latitude());
         $this->assertEquals(0, $rover->longitude());
         $this->assertEquals(Direction::NORTH, $rover->direction());
+        $this->assertEquals('3:0:N', $roverReport);
     }
 
     public function test_mars_rover_should_move_forward_to_east_when_F_command_given()
@@ -45,11 +46,13 @@ final class MarsRoverTest extends TestCase
             ->inAPlanetWithSize(10, 10)
             ->instantiate();
 
-        $rover->move('FF');
+        $roverReport = $rover->move('FF');
 
         $this->assertEquals(0, $rover->latitude());
         $this->assertEquals(2, $rover->longitude());
         $this->assertEquals(Direction::EAST, $rover->direction());
+        $this->assertEquals('0:2:E', $roverReport);
+
     }
 
     public function test_mars_rover_should_move_forward_to_south_when_F_command_given()
@@ -60,11 +63,12 @@ final class MarsRoverTest extends TestCase
             ->inAPlanetWithSize(10, 10)
             ->instantiate();
 
-        $rover->move('FFFF');
+        $roverReport = $rover->move('FFFF');
 
         $this->assertEquals(1, $rover->latitude());
         $this->assertEquals(0, $rover->longitude());
         $this->assertEquals(Direction::SOUTH, $rover->direction());
+        $this->assertEquals('1:0:S', $roverReport);
     }
 
     public function test_mars_rover_should_move_forward_to_west_when_F_command_given()
@@ -75,11 +79,12 @@ final class MarsRoverTest extends TestCase
             ->inAPlanetWithSize(10, 10)
             ->instantiate();
 
-        $rover->move('FF');
+        $roverReport = $rover->move('FF');
 
         $this->assertEquals(2, $rover->latitude());
         $this->assertEquals(2, $rover->longitude());
         $this->assertEquals(Direction::WEST, $rover->direction());
+        $this->assertEquals('2:2:W', $roverReport);
     }
 
     public function test_mars_rover_should_turn_right_when_R_command_is_given()
@@ -90,11 +95,13 @@ final class MarsRoverTest extends TestCase
             ->inAPlanetWithSize(10, 10)
             ->instantiate();
 
-        $rover->move('RRRRR');
+        $roverReport = $rover->move('RRRRR');
 
         $this->assertEquals(1, $rover->latitude());
         $this->assertEquals(1, $rover->longitude());
         $this->assertEquals(Direction::EAST, $rover->direction());
+        $this->assertEquals('1:1:E', $roverReport);
+
     }
 
     public function test_mars_rover_should_turn_left_when_L_command_is_given()
@@ -105,11 +112,13 @@ final class MarsRoverTest extends TestCase
             ->inAPlanetWithSize(10, 10)
             ->instantiate();
 
-        $rover->move('LLLLL');
+        $roverReport = $rover->move('LLLLL');
 
         $this->assertEquals(1, $rover->latitude());
         $this->assertEquals(1, $rover->longitude());
         $this->assertEquals(Direction::NORTH, $rover->direction());
+        $this->assertEquals('1:1:N', $roverReport);
+
     }
 
     public function test_mars_rover_should_appear_to_south_when_being_on_north_edge_facing_north_and_F_command_given()
@@ -120,11 +129,13 @@ final class MarsRoverTest extends TestCase
             ->inAPlanetWithSize(5, 5)
             ->instantiate();
 
-        $rover->move('F');
+        $roverReport = $rover->move('F');
 
         $this->assertEquals(0, $rover->latitude());
         $this->assertEquals(0, $rover->longitude());
         $this->assertEquals(Direction::NORTH, $rover->direction());
+        $this->assertEquals('0:0:N', $roverReport);
+
     }
 
     public function test_mars_rover_should_appear_to_north_when_being_on_south_edge_facing_south_and_F_command_given()
@@ -135,11 +146,13 @@ final class MarsRoverTest extends TestCase
             ->inAPlanetWithSize(5, 5)
             ->instantiate();
 
-        $rover->move('F');
+        $roverReport = $rover->move('F');
 
         $this->assertEquals(4, $rover->latitude());
         $this->assertEquals(0, $rover->longitude());
         $this->assertEquals(Direction::SOUTH, $rover->direction());
+        $this->assertEquals('4:0:S', $roverReport);
+
     }
 
     public function test_mars_rover_should_appear_to_west_when_being_on_east_edge_facing_east_and_F_command_given()
@@ -150,11 +163,12 @@ final class MarsRoverTest extends TestCase
             ->inAPlanetWithSize(5, 5)
             ->instantiate();
 
-        $rover->move('F');
+        $roverReport = $rover->move('F');
 
         $this->assertEquals(0, $rover->latitude());
         $this->assertEquals(0, $rover->longitude());
         $this->assertEquals(Direction::EAST, $rover->direction());
+        $this->assertEquals('0:0:E', $roverReport);
     }
 
     public function test_mars_rover_should_appear_to_east_when_being_on_west_edge_facing_west_and_F_command_given()
@@ -165,11 +179,12 @@ final class MarsRoverTest extends TestCase
             ->inAPlanetWithSize(5, 5)
             ->instantiate();
 
-        $rover->move('F');
+        $roverReport = $rover->move('F');
 
         $this->assertEquals(0, $rover->latitude());
         $this->assertEquals(4, $rover->longitude());
         $this->assertEquals(Direction::WEST, $rover->direction());
+        $this->assertEquals('0:4:W', $roverReport);
     }
 
     public function test_rover_should_move_to_last_possible_position_and_report_the_obstacle_when_obstacle_find()
@@ -181,11 +196,11 @@ final class MarsRoverTest extends TestCase
             ->thatHasAnObstacleOn(1, 1)
             ->instantiate();
 
-        $output = $rover->move('FRF');
+        $roverReport = $rover->move('FRF');
 
         $this->assertEquals(1, $rover->latitude());
         $this->assertEquals(0, $rover->longitude());
         $this->assertEquals(Direction::EAST, $rover->direction());
-        $this->assertStringContainsString(UnreachablePositionException::ERROR_MESSAGE, $output);
+        $this->assertStringContainsString(UnreachablePositionException::ERROR_MESSAGE, $roverReport);
     }
 }
