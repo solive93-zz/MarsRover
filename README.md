@@ -19,8 +19,8 @@ it is facing.
 sequence of commands encounters an obstacle, the rover moves up to the last
 possible point, aborts the sequence and reports the obstacle.
 
-## Project SetUp
-### Locally
+# Project SetUp
+## Locally
 If you already have php and composer installed in your system you can run the following commands:
 
 1. Install project dependencies via composer
@@ -31,7 +31,7 @@ composer install
 ````
 vendor/bin/phpunit 
 ````
-### Using Docker
+## Using Docker
 1. Build
 ````
 make build
@@ -44,3 +44,20 @@ make tests
 ````
 make coverage
 ````
+
+# My solution
+● Since it was not specified. I assumed that the Rover would need a `PlanetMap` it has to explore, its current 
+`Position` and the `Direction` it is facing in order to be instantiated. All those are `ValueObjects`. 
+
+● I called the Rover's function that process the commands `move()` and receive a capitalized string of `L`, `R`, `F` as stated in the Mars Rover Mission explanation above. For example `FRFFLF`.
+
+● When Mars Rover is positioned in the northern edge of the planet map and facing north, and a Forward command is given, since planets are spherical, it will appear on the southest edge of the map. For instance, if it is located at `10,0` in a planet with size `9 x 9`, it is facing `North` and receives a `F` command, it will appear at position `0, 0` 
+
+● Obstacles are passed as an array of Positions where they are located, as the third argument of PlanetMap. When Rover encounters and obstacle, an exception is thrown, so it stops at last possible position, aborts the resto of the command sequence and reports the obstacle.
+
+● At the beginning, MarsRover's move() function return statement was typehinted as void. But after implementing obstacle detection and obstacle reporting, I changed the return type to string
+
+● Position reporting will follow this format: `latitude:longitude:direction`. For example: `1:1:W`.
+
+### Next steps (not implemented)
+● Add an extra abstraction layer. I was thinking of creating a `CommandSet` (a Collection of `Commands::class`), processed by some other class (¿¿called `Engine`??). 
